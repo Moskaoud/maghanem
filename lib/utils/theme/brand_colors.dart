@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 /// Predefined brand color palettes
 class BrandColors {
   // Define primary, secondary, and tertiary colors using the palettes
-  static const MaterialColor primary = blue;
+  static const MaterialColor primary = purple;
+  // static const MaterialColor primary = blue;
   static const MaterialColor secondary = teal;
   static const MaterialColor tertiary = orange;
 
@@ -90,4 +91,20 @@ class BrandColors {
     800: Color(0xFFF9A825),
     900: Color(0xFFF57F17),
   });
+
+  // Purple palette for primary color
+  static const MaterialColor purple = MaterialColor(0xFF8E6CEF, <int, Color>{
+    50: Color(0xFFF3EFFF),
+    100: Color(0xFFE0D8FE),
+    200: Color(0xFFCCBFFD),
+    300: Color(0xFFB8A5FC),
+    400: Color(0xFFA790FB),
+    500: Color(0xFF967CFB),
+    600: Color(0xFF8E6CEF), // Primary color
+    700: Color(0xFF7D59E0),
+    800: Color(0xFF6C46D1),
+    900: Color(0xFF5330B8),
+  });
+
+
 }

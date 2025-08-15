@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maghanem/pages/home.dart';
+import 'pages/cart/cart.dart';
+import 'pages/main_navigation_wrapper.dart';
+import 'routes/app_routes.dart';
 import 'utils/theme/app_theme.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -18,11 +19,15 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       // showSemanticsDebugger: true,
       theme: AppTheme.lightTheme,
+      initialRoute: AppRoutes.cart, // Set initial route to cart
+      routes: AppRoutes.routes, // Set named routes
       // theme: AppTheme.getAppTheme(),
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       // ),
-      home:Home(),
+      // home: const MainNavigationWrapper(),
+      // home:Home(),
+      // home:CartScreen(),
       //const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

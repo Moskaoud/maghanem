@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maghanem/utils/theme/typography.dart';
 
 /// Text theme configuration for the application.
 /// 
@@ -8,14 +9,18 @@ class AppTextTheme {
   AppTextTheme._(); // Private constructor to prevent instantiation
 
   /// Default font family for the app
-  static const String defaultFontFamily = 'Inter';
+  // static const String defaultFontFamily = 'CircularStd';
+  // static const String gabaritoFontFamily = 'Gabarito';
+  // static const String almaraiFontFamily = 'Almarai';
+  // static const String interFontFamily = 'Inter';
+  // To use one of the other font families, you can change defaultFontFamily or pass it to createTextTheme
 
   /// Creates a complete text theme for the application
   static TextTheme createTextTheme({
     required ColorScheme colorScheme,
     String? fontFamily,
   }) {
-    final String effectiveFontFamily = fontFamily ?? defaultFontFamily;
+    final String effectiveFontFamily = fontFamily ?? AppFontFamilies.defaultFontFamily;
     
     return TextTheme(
       // Display styles - for large, prominent text
@@ -72,12 +77,11 @@ class AppTextTheme {
 
       // Title styles - for card headers, list items
       titleLarge: TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 0,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
         color: colorScheme.onSurface,
+        // color: colorScheme.onSurface,
         fontFamily: effectiveFontFamily,
-        height: 1.27,
       ),
       titleMedium: TextStyle(
         fontSize: 16,

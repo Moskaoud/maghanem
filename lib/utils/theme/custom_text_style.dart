@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maghanem/utils/theme/text_theme.dart';
+import 'package:maghanem/utils/theme/typography.dart';
 
 /// Creates custom text styles for specific use cases
 class CustomTextStyles {
   CustomTextStyles._();
-  static const String defaultFontFamily = AppTextTheme.defaultFontFamily;
+  static const String defaultFontFamily = AppFontFamilies.defaultFontFamily;
 
   /// Style for error messages
   static TextStyle error(ColorScheme colorScheme, {String? fontFamily}) {
