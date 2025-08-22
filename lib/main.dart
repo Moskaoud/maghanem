@@ -6,6 +6,7 @@ import 'models/cart_model.dart';
 import 'pages/main_navigation_wrapper.dart';
 import 'routes/app_routes.dart';
 import 'utils/theme/app_theme.dart';
+import 'viewmodels/login_viewmodel.dart';
 
 void main() {
   runApp(
@@ -13,6 +14,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => CartModel()),
         ChangeNotifierProvider(create: (context) => Payment()),
+        ChangeNotifierProvider(create: (context) => LoginViewModel()), // Added this line
         // Add other providers here if needed
       ],
       child: const MyApp(),
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       // showSemanticsDebugger: true,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.paymentScreen, // Set initial route to cart
+      initialRoute: AppRoutes.loginPage, // Set initial route to cart
       routes: AppRoutes.routes, // Set named routes
       // theme: AppTheme.getAppTheme(),
       // theme: ThemeData(
