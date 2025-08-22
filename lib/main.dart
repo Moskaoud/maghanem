@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import Provider
+import 'models/payment.dart';
 import 'pages/cart/cart.dart';
+import 'models/cart_model.dart';
 import 'pages/main_navigation_wrapper.dart';
 import 'routes/app_routes.dart';
 import 'utils/theme/app_theme.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider( // Wrap MyApp with MultiProvider
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartModel()),
+        ChangeNotifierProvider(create: (context) => Payment()),
+        // Add other providers here if needed
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +32,7 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       // showSemanticsDebugger: true,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.cart, // Set initial route to cart
+      initialRoute: AppRoutes.paymentScreen, // Set initial route to cart
       routes: AppRoutes.routes, // Set named routes
       // theme: AppTheme.getAppTheme(),
       // theme: ThemeData(

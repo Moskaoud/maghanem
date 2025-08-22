@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'home_page.dart'; // Assuming home_page.dart contains HomePage
-import 'profile_page.dart'; // Assuming profile_page.dart contains ProfilePage
+// import 'portfolio_page.dart'; // Assuming portfolio_page.dart contains ProfilePage
 import 'settings_page.dart'; // Assuming settings_page.dart contains SettingsPage
 
 class MainNavigationWrapper extends StatefulWidget {
@@ -18,7 +18,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   // Updated to reflect the actual widget classes and their intended titles
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const ProfilePage(),
+    // const ProfilePage(),
     const SettingsPage(),
   ];
 
