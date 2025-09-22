@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       // showSemanticsDebugger: true,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.loginPage, // Set initial route to cart
+      initialRoute: AppRoutes.animationSession, // Set initial route to cart
       routes: AppRoutes.routes, // Set named routes
       // theme: AppTheme.getAppTheme(),
       // theme: ThemeData(
