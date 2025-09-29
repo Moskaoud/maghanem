@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "206192041033",
+    "project_id": "maghanem-1",
+    "storage_bucket": "maghanem-1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206192041033:android:2a2791b1ef9169ccaa3398",
+        "android_client_info": {
+          "package_name": "com.moskaoud.maghanem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206192041033-7l22tkse63kmd06brjhend6bps5uiamq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moskaoud.maghanem",
+            "certificate_hash": "62588c8fc0bb11035c5d442ed3de0b7d3e52cd32"
+          }
+        },
+        {
+          "client_id": "206192041033-q7cc4s2vu2dfnqaucddpri02d6v7vg2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwSSer0TQLAug2xzVswYXUquTW4GIcKWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206192041033-q7cc4s2vu2dfnqaucddpri02d6v7vg2q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "206192041033-8ifg7dfgndj37gfjt5h1e0dl2tlsb0ik.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moskaoud.maghanem"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

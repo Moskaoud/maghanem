@@ -7,8 +7,15 @@ import 'models/cart_model.dart';
 import 'routes/app_routes.dart';
 import 'utils/theme/app_theme.dart';
 import 'viewmodels/login_viewmodel.dart';
-
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+// Import your Firebase options file if you generated it with FlutterFire CLI
+import 'firebase_options.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    // If you used FlutterFire CLI and have firebase_options.dart:
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider( // Wrap MyApp with MultiProvider
       providers: [
@@ -34,7 +41,8 @@ class MyApp extends StatelessWidget {
       // debugShowMaterialGrid: true,
       // showSemanticsDebugger: true,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.animationSession, // Set initial route to cart
+      // initialRoute: AppRoutes.animationSession, // Set initial route to cart
+      initialRoute: AppRoutes.register, // Set initial route to cart
       routes: AppRoutes.routes, // Set named routes
       // theme: AppTheme.getAppTheme(),
       // theme: ThemeData(
