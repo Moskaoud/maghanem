@@ -10,12 +10,21 @@ import 'viewmodels/login_viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
 // Import your Firebase options file if you generated it with FlutterFire CLI
 import 'firebase_options.dart';
+
+// Import NotificationService
+import 'package:maghanem/services/notification_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     // If you used FlutterFire CLI and have firebase_options.dart:
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Initialize NotificationService
+  final NotificationService notificationService = NotificationService();
+  await notificationService.initialize();
+
   runApp(
     MultiProvider( // Wrap MyApp with MultiProvider
       providers: [

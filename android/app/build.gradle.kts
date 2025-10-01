@@ -14,6 +14,7 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -31,6 +32,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true // Recommended for Firebase
     }
 
     buildTypes {
@@ -44,4 +46,16 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+//    implementation(platform("com.google.firebase:firebase-bom:33.0.0")) // Example Firebase BOM
+//    implementation("com.google.firebase:firebase-analytics") // Example Firebase Analytics
+    // Add other Firebase SDKs as needed
+
+//    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+//    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.1.4")
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.1.5")
+
+    // Add other dependencies here
 }
