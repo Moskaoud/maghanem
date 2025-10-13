@@ -1,7 +1,11 @@
+//todo check handle notification service
+//navigation and local foreground notification and check gemini agent
+//
+
 import 'dart:developer' as developer; // Added for better logging
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart'; // Uncomment if using
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // Must be a top-level function (not a class method)
 // Or a static method in a class if using Firebase SDK v10.4.0 and above for onBackgroundMessage
@@ -24,8 +28,8 @@ class NotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static const String _serviceName = 'NotificationService'; // For logger name
 
-  // Optional: For custom foreground notifications
-  // final FlutterLocalNotificationsPlugin _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  // For custom foreground notifications
+  final FlutterLocalNotificationsPlugin _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   // Stream for listening to notification data when app is opened from a notification tap
   // final BehaviorSubject<Map<String, dynamic>> _messageSubject = BehaviorSubject<Map<String, dynamic>>();
@@ -47,8 +51,8 @@ class NotificationService {
       developer.log('User granted permission: ${settings.authorizationStatus}', name: _serviceName);
     }
 
-    // Optional: Initialize flutter_local_notifications
-    // await _initializeLocalNotifications();
+    // Initialize flutter_local_notifications
+    await _initializeLocalNotifications();
 
     // Get the FCM token
     await _getFCMToken();
@@ -65,8 +69,8 @@ class NotificationService {
           developer.log('Message also contained a notification: ${message.notification?.title} / ${message.notification?.body}', name: _serviceName);
         }
         // If app is in foreground, a system notification might not appear.
-        // Show a local notification or an in-app banner.
-        // _showLocalNotification(message); // Uncomment if using flutter_local_notifications
+        // Show a local notification to make it visible or an in-app banner..
+        _showLocalNotification(message);
       }
     });
 
@@ -125,21 +129,21 @@ class NotificationService {
     // _messageSubject.add(message.data); // If using a stream for navigation
   }
 
-  // --- Optional: Flutter Local Notifications for Foreground ---
-  /*
+  // --- Flutter Local Notifications for Foreground ---
+
   Future<void> _initializeLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher'); // Or your app icon
+        AndroidInitializationSettings('@mipmap/ic_launcher'); // Default app icon
 
-    // Configure iOS initialization settings
     final DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
-      requestAlertPermission: false, // Permissions are requested by FCM
+      requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
-        // Handle older iOS versions
-        developer.log('iOS older: local notification received: $title', name: _serviceName);
-      },
+      // ///isn't defined. error
+      // onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+      //   // Handle older iOS versions
+      //   developer.log('iOS older: local notification received: $title', name: _serviceName);
+      // },
     );
 
     final InitializationSettings initializationSettings = InitializationSettings(
@@ -174,24 +178,11 @@ class NotificationService {
         ?.createNotificationChannel(channel);
   }
 
-  // Required for onDidReceiveBackgroundNotificationResponse (must be a top-level or static function)
-  // @pragma('vm:entry-point') 
-  // static void _onDidReceiveBackgroundNotificationResponse(NotificationResponse response) {
-  //    if (kDebugMode) {
-  //       developer.log('Local background notification tapped with payload: ${response.payload}', name: 'NotificationService.BackgroundLocal');
-  //     }
-  //     // Handle tap on local notification if needed
-  // }
-
   Future<void> _showLocalNotification(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    AppleNotification? apple = message.notification?.apple; // For iOS specific properties
 
     if (notification == null) return;
-
-    // Use a specific channel ID if you have multiple
-    const String channelId = 'high_importance_channel';
 
     await _localNotificationsPlugin.show(
       notification.hashCode, // Unique ID for the notification
@@ -199,26 +190,22 @@ class NotificationService {
       notification.body,
       NotificationDetails(
         android: AndroidNotificationDetails(
-          channelId, 
-          'High Importance Notifications', // Channel name
+          'high_importance_channel', 
+          'High Importance Notifications',
           channelDescription: 'This channel is used for important notifications.',
-          icon: android?.smallIcon ?? '@mipmap/ic_launcher', // Use Android specific icon or default
+          icon: android?.smallIcon ?? '@mipmap/ic_launcher',
           importance: Importance.max,
           priority: Priority.high,
-          // other properties...
         ),
-        iOS: DarwinNotificationDetails(
-          presentAlert: true, // Ensure alert is shown
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
           presentBadge: true,
           presentSound: true,
-          subtitle: apple?.subtitle, // iOS specific subtitle
-          // sound: 'custom_sound.wav', // If you have custom sounds
         ),
       ),
-      payload: message.data.isNotEmpty ? message.data.toString() : null, // Pass data as payload
+      payload: message.data.isNotEmpty ? message.data.toString() : null,
     );
   }
-  */
 
   void dispose() {
     // _messageSubject.close(); // If using BehaviorSubject
