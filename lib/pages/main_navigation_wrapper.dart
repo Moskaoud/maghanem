@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:maghanem/pages/firestore_example_screen.dart';
 
-import 'home_page.dart'; // Assuming home_page.dart contains HomePage
-// import 'portfolio_page.dart'; // Assuming portfolio_page.dart contains ProfilePage
-import 'settings_page.dart'; // Assuming settings_page.dart contains SettingsPage
+import 'home_page.dart';
+import 'profile_page.dart'; // Use the new ProfilePage
+import 'settings_page.dart';
 
 class MainNavigationWrapper extends StatefulWidget {
   const MainNavigationWrapper({super.key});
@@ -15,18 +16,18 @@ class MainNavigationWrapper extends StatefulWidget {
 class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   int _selectedIndex = 0;
 
-  // Updated to reflect the actual widget classes and their intended titles
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    // const ProfilePage(),
+    const ProfilePage(), // Updated to use ProfilePage
     const SettingsPage(),
+    const FirestoreExampleScreen(),
   ];
 
-  // Titles for the AppBar, corresponding to each page
   static const List<String> _pageTitles = <String>[
     'Home',
     'Profile',
     'Settings',
+    'Firestore',
   ];
 
   void _onItemTapped(int index) {
@@ -39,15 +40,15 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pageTitles[_selectedIndex]), // Dynamic title
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer, // Example AppBar color
+        title: Text(_pageTitles[_selectedIndex]),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.zero, // Remove any padding from the ListView
+          padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
@@ -67,7 +68,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
               selected: _selectedIndex == 0,
               onTap: () {
                 _onItemTapped(0);
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -76,7 +77,7 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
               selected: _selectedIndex == 1,
               onTap: () {
                 _onItemTapped(1);
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -85,7 +86,16 @@ class _MainNavigationWrapperState extends State<MainNavigationWrapper> {
               selected: _selectedIndex == 2,
               onTap: () {
                 _onItemTapped(2);
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.cloud_upload),
+              title: const Text('Firestore'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                _onItemTapped(3);
+                Navigator.pop(context);
               },
             ),
           ],

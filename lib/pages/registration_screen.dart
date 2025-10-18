@@ -1,10 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:maghanem/services/auth_service.dart';
-import 'package:maghanem/pages/home_screen.dart'; // Import HomeScreen
-// import 'package:maghanem/pages/login_screen.dart';
+import 'package:maghanem/pages/home_screen.dart';
 
-import '../routes/app_routes.dart'; // Import LoginScreen
+import '../routes/app_routes.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -44,14 +44,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           password: _passwordController.text,
         );
 
-        if (userCredential != null && mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration successful!')),
-          );
-          // Navigate to HomeScreen after successful registration
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()), 
-          );
+        if (userCredential != null) {
+          await _authService.sendVerificationEmail();
+
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Registration successful! A verification email has been sent.')),
+            );
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          }
         }
       } on FirebaseAuthException catch (e) {
         String message;
@@ -66,7 +69,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             message = 'The email address is not valid.';
             break;
           default:
-            message = 'Registration failed: ${e.message}'; // More specific error
+            message = 'Registration failed: ${e.message}';
         }
         setState(() {
           _errorMessage = message;
@@ -218,9 +221,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(AppRoutes.authLogin);
-                        // Navigator.of(context).pushReplacement(
-                        //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        // );
                       },
                       child: const Text('Login'),
                     ),

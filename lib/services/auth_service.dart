@@ -1,22 +1,24 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth;
 
   AuthService(this._firebaseAuth);
 
-  /// Stream of authentication state changes.
-  /// Emits the current [User] or null if not authenticated.
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  /// Gets the current authenticated [User] or null.
   User? get currentUser => _firebaseAuth.currentUser;
 
-  /// Registers a new user with email and password.
-  ///
-  /// Throws a [FirebaseAuthException] if registration fails.
+  Future<void> reloadUser() async {
+    try {
+      await _firebaseAuth.currentUser?.reload();
+    } catch (e) {
+      // Handle potential errors, e.g., user is no longer signed in.
+      throw Exception('Failed to reload user.');
+    }
+  }
+
   Future<UserCredential?> signUpWithEmailPassword({
     required String email,
     required String password,
@@ -28,18 +30,12 @@ class AuthService {
       );
       return userCredential;
     } on FirebaseAuthException {
-      // Let the caller handle specific FirebaseAuthExceptions
       rethrow;
     } catch (e) {
-      // For other unexpected errors
-      // print('Unexpected error during sign up: \$e');
       throw Exception('An unexpected error occurred. Please try again.');
     }
   }
 
-  /// Signs in an existing user with email and password.
-  ///
-  /// Throws a [FirebaseAuthException] if sign-in fails.
   Future<UserCredential?> signInWithEmailPassword({
     required String email,
     required String password,
@@ -57,24 +53,41 @@ class AuthService {
     }
   }
 
-  /// Signs out the current user.
+  Future<void> sendVerificationEmail() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+    } catch (e) {
+      throw Exception('An unexpected error occurred. Please try again.');
+    }
+  }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email.trim());
+    } on FirebaseAuthException {
+      rethrow;
+    }
+  }
+
+  Future<void> updateProfile({String? displayName, String? photoURL}) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updateProfile(displayName: displayName, photoURL: photoURL);
+      }
+    } catch (e) {
+      throw Exception('An unexpected error occurred. Please try again.');
+    }
+  }
+
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      // print('Error signing out: \$e');
-      // Optionally, handle sign-out errors, though they are rare.
       throw Exception('Error signing out. Please try again.');
     }
   }
-
-  // You can add other methods like:
-  // - resetPassword(String email)
-  // - updateProfile(String displayName, String photoURL)
-  // - signInWithGoogle()
-  // - etc.
 }
-
-// Helper to provide a global instance or use with a service locator/provider
-// For simplicity here, you might instantiate it where needed or use Provider.
-// Example: final authService = AuthService(FirebaseAuth.instance);
